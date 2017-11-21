@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/txtMovieTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:elevation="@dimen/margin_vsmall"
+            android:padding="@dimen/padding_xxlarge"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_xxxlarge"
+            />
+
+        <ImageView
+            android:id="@+id/imgMovieDetail"
+            android:layout_width="@dimen/img_detail_width"
+            android:layout_height="@dimen/img_detail_height"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:layout_below="@id/txtMovieTitle"
+            android:layout_margin="@dimen/padding_small"/>
+
+        <TextView
+            android:id="@+id/txtYearRelease"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/imgMovieDetail"
+            android:layout_margin="@dimen/margin_vsmall"
+            android:layout_toEndOf="@+id/imgMovieDetail"
+            android:textSize="@dimen/font_xxlarge"/>
+
+
+        <TextView
+            android:id="@+id/txtMovieRate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/txtYearRelease"
+            android:layout_below="@+id/txtYearRelease"
+            android:textSize="@dimen/font_large"
+            android:textStyle="bold"/>
+
+        <Button
+            android:id="@+id/btnMarkFavorite"
+            android:layout_width="@dimen/margin_xxxlarge"
+            android:layout_height="@dimen/margin_xlarge"
+            android:layout_alignStart="@+id/txtMovieRate"
+            android:layout_below="@+id/txtMovieRate"
+            android:background="@color/colorAccentOpacity30"
+            android:text="@string/mark_as_favourite"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_small"
+            android:textStyle="bold"/>
+
+
+        <TextView
+            android:id="@+id/txtOverview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imgMovieDetail"
+            android:padding="@dimen/padding_medium"
+            android:textAlignment="viewStart"
+            android:textSize="@dimen/font_medium"/>
+
+        <View
+            android:id="@+id/viewSeparator"
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:layout_below="@+id/txtOverview"
+            android:layout_margin="@dimen/margin_small"
+            android:background="@color/colorAccent"/>
+
+        <include
+            android:id="@+id/progressBarMovieDetails"
+            layout="@layout/progressbar"
+            android:visibility="gone"/>
+    </RelativeLayout>
+
+</android.support.v4.widget.NestedScrollView>

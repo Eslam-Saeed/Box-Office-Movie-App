@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Box Office</string>
+    <string name="error_message">Something went wrong, Please try again later.</string>
+    <string name="mark_as_favourite">Mark as favorite</string>
+    <string name="un_favourite">Un Favorite</string>
+    <string name="trailers_title">Trailers :</string>
+    <string name="movie_details">Movie Details</string>
+
+
+</resources>
