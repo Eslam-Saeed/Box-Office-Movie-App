@@ -59,8 +59,8 @@ public class FragmentMovieDetails extends BaseFragment implements ViewMovieDetai
         mView = inflater.inflate(R.layout.fragment_movie_details, null);
         initializeViews(mView);
         setListeners();
-        if(mToolbarChangeListener != null)
-            mToolbarChangeListener.changeToolbar(getString(R.string.movie_details) , true);
+        if (mToolbarChangeListener != null)
+            mToolbarChangeListener.changeToolbar(getString(R.string.movie_details), true, false);
         onMovieDetailsSuccess(mMovie);
         return mView;
     }
@@ -114,7 +114,7 @@ public class FragmentMovieDetails extends BaseFragment implements ViewMovieDetai
                 .show();
     }
 
-    public static FragmentMovieDetails newInstance( Movie movie) {
+    public static FragmentMovieDetails newInstance(Movie movie) {
         FragmentMovieDetails fragment = new FragmentMovieDetails();
         Bundle bundle = new Bundle();
         bundle.putParcelable(Constants.MOVIE_DETAILS, movie);

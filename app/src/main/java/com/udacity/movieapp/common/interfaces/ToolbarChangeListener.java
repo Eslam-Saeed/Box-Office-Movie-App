@@ -5,5 +5,5 @@ package com.udacity.movieapp.common.interfaces;
  */
 
 public interface ToolbarChangeListener {
-    void changeToolbar(String title , boolean showBackButton);
+    void changeToolbar(String title , boolean showBackButton,boolean showMenuIcons);
 }

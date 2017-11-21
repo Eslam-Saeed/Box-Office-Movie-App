@@ -70,7 +70,7 @@ public class FragmentListingMovies extends BaseFragment implements ViewListingMo
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (mToolbarChangeListener != null)
-            mToolbarChangeListener.changeToolbar(getString(R.string.app_name), false);
+            mToolbarChangeListener.changeToolbar(getString(R.string.app_name), false,true);
         if (savedInstanceState != null && savedInstanceState.containsKey(Constants.MOVIES_LIST)) {
             ArrayList<Movie> tempList = savedInstanceState.getParcelableArrayList(Constants.MOVIES_LIST);
             onMoviesListingSuccess(tempList);

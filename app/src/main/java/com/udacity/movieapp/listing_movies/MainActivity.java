@@ -14,6 +14,7 @@ public class MainActivity extends BaseActivity implements ToolbarChangeListener 
     private Toolbar mToolbarMainListing;
     private String searchFilter = Constants.POPULAR;
     private FragmentListingMovies mFragmentListingMovies;
+    private boolean mShowMenuIcons = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,10 @@ public class MainActivity extends BaseActivity implements ToolbarChangeListener 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
+
+        menu.findItem(R.id.action_popular).setVisible(mShowMenuIcons);
+        menu.findItem(R.id.action_top_rated).setVisible(mShowMenuIcons);
+
         return true;
     }
 
@@ -85,8 +90,10 @@ public class MainActivity extends BaseActivity implements ToolbarChangeListener 
     }
 
     @Override
-    public void changeToolbar(String title, boolean showBackButton) {
+    public void changeToolbar(String title, boolean showBackButton, boolean showMenuIcons) {
+        mShowMenuIcons = showMenuIcons;
         setToolbar(mToolbarMainListing, title, showBackButton, showBackButton);
+        invalidateOptionsMenu();
     }
 
 }
