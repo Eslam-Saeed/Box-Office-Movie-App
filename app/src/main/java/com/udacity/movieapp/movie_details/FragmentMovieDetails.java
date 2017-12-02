@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,7 +19,7 @@ import com.squareup.picasso.Picasso;
 import com.udacity.movieapp.R;
 import com.udacity.movieapp.common.base.BaseFragment;
 import com.udacity.movieapp.common.helpers.Constants;
-import com.udacity.movieapp.common.helpers.MoviesDBController;
+import com.udacity.movieapp.common.helpers.dbandprovider.MoviesDBController;
 import com.udacity.movieapp.common.helpers.ServicesHelper;
 import com.udacity.movieapp.common.interfaces.ToolbarChangeListener;
 import com.udacity.movieapp.common.models.Movie;
@@ -120,7 +119,7 @@ public class FragmentMovieDetails extends BaseFragment implements ViewMovieDetai
             int numOfRowsAffected = 0;
             if (isFavorite) {
                 numOfRowsAffected = mDBController.deleteFromFavourite(mMovie.getId());
-                if (numOfRowsAffected != 0) {
+                if (numOfRowsAffected > 0) {
                     isFavorite = !isFavorite;
                     btnMarkFavorite.setText(getString(R.string.mark_as_favourite));
                     btnMarkFavorite.setBackgroundColor(mContext.getResources().getColor(R.color.colorAccentOpacity30));
@@ -156,9 +155,7 @@ public class FragmentMovieDetails extends BaseFragment implements ViewMovieDetai
 
     @Override
     public void onMovieDetailsFail(String message) {
-        Snackbar.make(mView, message, Snackbar.LENGTH_SHORT)
-                .setActionTextColor(getResources().getColor(android.R.color.holo_red_light))
-                .show();
+        Snackbar.make(mView, message, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override

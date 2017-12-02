@@ -23,6 +23,11 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        
+        <provider
+            android:authorities="com.udacity.movieapp"
+            android:name=".common.helpers.dbandprovider.MoviesContentProvider"
+            android:exported="false"/>
     </application>
 
 </manifest>

@@ -8,6 +8,7 @@
     <string name="reviews">Reviews:</string>
     <string name="trailers">Trailers:</string>
     <string name="no_favorite_movies">No favorite movies!</string>
+    <string name="no_internet">No internet connection!</string>
 
     <bool name="isTablet">false</bool>
 

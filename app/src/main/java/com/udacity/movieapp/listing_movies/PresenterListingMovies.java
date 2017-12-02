@@ -27,7 +27,9 @@ class PresenterListingMovies extends BasePresenter {
         if (ConnectionDetector.isConnectingToInternet(mContext)) {
             mViewListingMovies.showProgressBar(true);
             ServicesHelper.getInstance(mContext).getListMovies(searchFilter, getListMoviesSuccessListener, getListMoviesErrorListener);
-        }
+        }else
+            mViewListingMovies.onMoviesListingFail(mContext.getString(R.string.no_internet));
+
     }
 
     private Response.Listener<MainResponse> getListMoviesSuccessListener = new Response.Listener<MainResponse>() {

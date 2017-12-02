@@ -79,7 +79,7 @@ public class PresenterMovieDetails extends BasePresenter {
             mViewMovieDetails.showProgressBar(false);
             if (reviewsResponse != null)
                 mViewMovieDetails.onReviewsSuccess(MyApplication.getmGson().fromJson(reviewsResponse, Reviews.class));
-             else
+            else
                 mViewMovieDetails.onMovieDetailsFail(mContext.getString(R.string.error_message));
         }
     };

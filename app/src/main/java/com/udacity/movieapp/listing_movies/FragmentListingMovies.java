@@ -2,12 +2,9 @@ package com.udacity.movieapp.listing_movies;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,8 +13,9 @@ import android.widget.ProgressBar;
 
 import com.udacity.movieapp.R;
 import com.udacity.movieapp.common.base.BaseFragment;
+import com.udacity.movieapp.common.helpers.ConnectionDetector;
 import com.udacity.movieapp.common.helpers.Constants;
-import com.udacity.movieapp.common.helpers.MoviesDBController;
+import com.udacity.movieapp.common.helpers.dbandprovider.MoviesDBController;
 import com.udacity.movieapp.common.helpers.Utilities;
 import com.udacity.movieapp.common.interfaces.MovieClickListener;
 import com.udacity.movieapp.common.interfaces.ToolbarChangeListener;
@@ -148,9 +146,11 @@ public class FragmentListingMovies extends BaseFragment implements ViewListingMo
 
     @Override
     public void navigateToDetailsScreen(Movie movie) {
-
-        getFragmentManager().beginTransaction().replace(Utilities.isTablet(mContext) ? R.id.containerMovieDetails : R.id.containerMainListing,
-                FragmentMovieDetails.newInstance(movie)).addToBackStack(Constants.FRAGMENT_MOVIE_DETAILS_TAG).commit();
+        if (ConnectionDetector.isConnectingToInternet(mContext)) {
+            getFragmentManager().beginTransaction().replace(Utilities.isTablet(mContext) ? R.id.containerMovieDetails : R.id.containerMainListing,
+                    FragmentMovieDetails.newInstance(movie)).addToBackStack(Constants.FRAGMENT_MOVIE_DETAILS_TAG).commit();
+        } else
+            onMoviesListingFail(getString(R.string.no_internet));
     }
 
     public static FragmentListingMovies newInstance(Context context, String searchFilter) {

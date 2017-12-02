@@ -7,11 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.udacity.movieapp.R;
-import com.udacity.movieapp.common.helpers.MoviesDBController;
+import com.udacity.movieapp.common.helpers.dbandprovider.MoviesDBController;
 import com.udacity.movieapp.common.helpers.ServicesHelper;
 import com.udacity.movieapp.common.interfaces.MovieClickListener;
 import com.udacity.movieapp.common.models.Movie;
@@ -66,6 +65,8 @@ public class AdapterMoviesListing extends RecyclerView.Adapter<AdapterMoviesList
 
     @Override
     public int getItemCount() {
+        if (listMyMovies == null)
+            return 0;
         return listMyMovies.size();
     }
 

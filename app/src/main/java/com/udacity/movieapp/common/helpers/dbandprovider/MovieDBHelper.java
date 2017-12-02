@@ -1,9 +1,12 @@
-package com.udacity.movieapp.common.helpers;
+package com.udacity.movieapp.common.helpers.dbandprovider;
 
 import android.content.Context;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.net.Uri;
+
+import java.net.URI;
 
 
 /**
@@ -21,6 +24,12 @@ class MovieDBHelper extends SQLiteOpenHelper {
     static final String MOVIE_BACKDROP_PATH = "movie_backdrop_path";
     static final String MOVIE_VOTE_AVERAGE = "movie_vote_average";
     static final String MOVIE_RELEASE_DATE = "movie_release_date";
+
+    static final String AUTHORITY = "com.udacity.movieapp";
+
+    static final Uri BASE_CONTENT_URI = Uri.parse("content://" + AUTHORITY);
+
+    static final Uri BASE_CONTENT = BASE_CONTENT_URI.buildUpon().appendPath(TABLE_NAME).build();
 
     private static final int DATABASE_VERSION = 1;
 
