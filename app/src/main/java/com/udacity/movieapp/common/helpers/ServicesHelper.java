@@ -19,7 +19,7 @@ public class ServicesHelper {
     public static final String IMAGE_URL = "http://image.tmdb.org/t/p/w185/";
     private static final String TRAILERS = "/videos";
     private static final String REVIEWS = "/reviews";
-    private static final String API_KEY = "?api_key=104cd7ae1c869742a5543776bbb649ea";
+    private static final String API_KEY = "?api_key=";
 
 
     private RequestQueue mRequestQueue;
