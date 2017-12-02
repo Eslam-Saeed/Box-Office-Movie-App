@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
 /**
  * Created by Eslam.Mahmoud on 11/20/2017.
  */
@@ -23,10 +25,13 @@ public class Movie implements Parcelable {
     private String backdropPath;
     @SerializedName("vote_average")
     private Double voteAverage;
-    @SerializedName("vote_count")
-    private Integer voteCount;
     @SerializedName("release_date")
     private String releaseDate;
+
+    private Trailers mTrailers;
+    private Reviews mReviews;
+
+
 
     public Movie() {
     }
@@ -45,11 +50,6 @@ public class Movie implements Parcelable {
             voteAverage = null;
         } else {
             voteAverage = in.readDouble();
-        }
-        if (in.readByte() == 0) {
-            voteCount = null;
-        } else {
-            voteCount = in.readInt();
         }
         releaseDate = in.readString();
     }
@@ -114,20 +114,28 @@ public class Movie implements Parcelable {
         this.voteAverage = voteAverage;
     }
 
-    public Integer getVoteCount() {
-        return voteCount;
-    }
-
-    public void setVoteCount(Integer voteCount) {
-        this.voteCount = voteCount;
-    }
-
     public String getReleaseDate() {
         return releaseDate;
     }
 
     public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
+    }
+
+    public Trailers getTrailers() {
+        return mTrailers;
+    }
+
+    public void setTrailers(Trailers trailers) {
+        mTrailers = trailers;
+    }
+
+    public Reviews getReviews() {
+        return mReviews;
+    }
+
+    public void setReviews(Reviews reviews) {
+        mReviews = reviews;
     }
 
     @Override
@@ -152,12 +160,6 @@ public class Movie implements Parcelable {
         } else {
             parcel.writeByte((byte) 1);
             parcel.writeDouble(voteAverage);
-        }
-        if (voteCount == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeInt(voteCount);
         }
         parcel.writeString(releaseDate);
     }

@@ -8,13 +8,16 @@ import android.view.MenuItem;
 import com.udacity.movieapp.R;
 import com.udacity.movieapp.common.base.BaseActivity;
 import com.udacity.movieapp.common.helpers.Constants;
+import com.udacity.movieapp.common.helpers.Utilities;
 import com.udacity.movieapp.common.interfaces.ToolbarChangeListener;
+import com.udacity.movieapp.movie_details.FragmentMovieDetails;
 
 public class MainActivity extends BaseActivity implements ToolbarChangeListener {
     private Toolbar mToolbarMainListing;
     private String searchFilter = Constants.POPULAR;
     private FragmentListingMovies mFragmentListingMovies;
     private boolean mShowMenuIcons = true;
+    private boolean isTablet = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +25,7 @@ public class MainActivity extends BaseActivity implements ToolbarChangeListener 
         setContentView(R.layout.activity_main);
         initializeViews();
         setListeners();
+        isTablet = Utilities.isTablet(this);
         setToolbar(mToolbarMainListing, getString(R.string.app_name), false, false);
         if (savedInstanceState == null)
             loadFragments();
@@ -51,14 +55,20 @@ public class MainActivity extends BaseActivity implements ToolbarChangeListener 
             mFragmentListingMovies = FragmentListingMovies.newInstance(this, searchFilter);
         getSupportFragmentManager().beginTransaction().replace(R.id.containerMainListing,
                 mFragmentListingMovies).commit();
+        if (isTablet) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.containerMovieDetails,
+                    FragmentMovieDetails.newInstance()).commit();
+        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
-
-        menu.findItem(R.id.action_popular).setVisible(mShowMenuIcons);
-        menu.findItem(R.id.action_top_rated).setVisible(mShowMenuIcons);
+        if (!isTablet) {
+            menu.findItem(R.id.action_popular).setVisible(mShowMenuIcons);
+            menu.findItem(R.id.action_top_rated).setVisible(mShowMenuIcons);
+            menu.findItem(R.id.action_favorites).setVisible(mShowMenuIcons);
+        }
 
         return true;
     }
@@ -75,6 +85,10 @@ public class MainActivity extends BaseActivity implements ToolbarChangeListener 
             case R.id.action_popular:
                 searchFilter = Constants.POPULAR;
                 mFragmentListingMovies.refresh(searchFilter);
+                break;
+            case R.id.action_favorites:
+                searchFilter = Constants.FAVORITES;
+                mFragmentListingMovies.loadFavorites();
                 break;
             case android.R.id.home:
                 onBackPressed();

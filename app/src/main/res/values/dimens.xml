@@ -28,4 +28,6 @@
     <dimen name="margin_xxxxlarge">72dp</dimen>
     <dimen name="img_detail_width">180dp</dimen>
     <dimen name="img_detail_height">220dp</dimen>
+    <dimen name="imgTrailerW">94dp</dimen>
+    <dimen name="imgTrailerH">80dp</dimen>
 </resources>

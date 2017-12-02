@@ -6,6 +6,7 @@ import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.udacity.movieapp.common.models.Movie;
@@ -16,7 +17,9 @@ public class ServicesHelper {
 
     private static final String BASE_URL = "https://api.themoviedb.org/3/movie/";
     public static final String IMAGE_URL = "http://image.tmdb.org/t/p/w185/";
-    private static final String API_KEY = "?api_key=";
+    private static final String TRAILERS = "/videos";
+    private static final String REVIEWS = "/reviews";
+    private static final String API_KEY = "?api_key=104cd7ae1c869742a5543776bbb649ea";
 
 
     private RequestQueue mRequestQueue;
@@ -26,7 +29,7 @@ public class ServicesHelper {
             DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
 
     public enum Tag {
-        MOVIE_DETAILS, MAIN_LISTING_MOVIES
+        MOVIE_DETAILS, TRAILERS_AND_REVIEWS, MAIN_LISTING_MOVIES
     }
 
     private ServicesHelper(Context context) {
@@ -83,47 +86,27 @@ public class ServicesHelper {
             e.printStackTrace();
         }
     }
-/*
-    //============ Change Password ====================
-    public void changePassword(final Context mContext, final ChangePasswordRequest changePasswordRequest, final Response.Listener<MainResponse> successListener, final Response.ErrorListener errorListener) {
-        StringRequest jsonObjectRequest = null;
-        jsonObjectRequest = new StringRequest(Request.Method.PUT, BASE_URL.concat("Profile/changepassword"), new Response.Listener<String>() {
-            @Override
-            public void onResponse(String mainResponse) {
-                if (mainResponse != null)
-                    successListener.onResponse(MyApplication.getmGson().fromJson(mainResponse, MainResponse.class));
-                else
-                    errorListener.onErrorResponse(new VolleyError());
-            }
-        }, errorListener) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                return getMyHeaders(mContext);
-            }
 
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String, String> map = new HashMap<>();
-                map.put(Constants.CURRENT_PASSWORD, changePasswordRequest.getCurrentPassword());
-                map.put(Constants.NEW_PASSWORD, changePasswordRequest.getNewPassword());
-                return map;
-            }
-        };
-
-        jsonObjectRequest.setTag(Tag.CHANGE_PASSWORD);
-        jsonObjectRequest.setRetryPolicy(defaultRetry);
-        addToRequestQueue(jsonObjectRequest);
-    }*/
-
-/*    //=============== Forget Password Mail =======================
-    public void getForgetPasswordMail(Response.Listener<String> forgetPasswordSuccessListener, Response.ErrorListener forgetPasswordErrorListener) {
+    //================= Trailers and Reviews =========================
+    public void getTrailersOrReviews(int movieId, final boolean isTrailer, final Response.Listener<String> successListener, final Response.ErrorListener getTrailersAndReviewsErrorListener) {
         try {
-            StringRequest stringRequest = new StringRequest(Request.Method.GET, BASE_URL.concat("profile/getforgetpasswordemail"), forgetPasswordSuccessListener, forgetPasswordErrorListener);
-            stringRequest.setTag(Tag.FORGET_PASSWORD);
+            String url = BASE_URL.concat(String.valueOf(movieId)).concat(isTrailer ? TRAILERS : REVIEWS).concat(API_KEY);
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String stringResponse) {
+                    if (stringResponse != null)
+                        successListener.onResponse(stringResponse);
+                    else
+                        getTrailersAndReviewsErrorListener.onErrorResponse(new VolleyError());
+                }
+            }, getTrailersAndReviewsErrorListener);
+            stringRequest.setTag(Tag.TRAILERS_AND_REVIEWS);
             stringRequest.setRetryPolicy(defaultRetry);
             addToRequestQueue(stringRequest);
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }*/
+    }
+
+
 }

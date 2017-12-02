@@ -9,7 +9,7 @@
     <string name="trailers">Trailers:</string>
     <string name="no_favorite_movies">No favorite movies!</string>
 
-    <bool name="isTablet">false</bool>
+    <bool name="isTablet">true</bool>
 
 
 </resources>

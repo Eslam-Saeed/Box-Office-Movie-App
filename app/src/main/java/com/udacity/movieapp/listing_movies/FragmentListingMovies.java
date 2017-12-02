@@ -17,6 +17,7 @@ import android.widget.ProgressBar;
 import com.udacity.movieapp.R;
 import com.udacity.movieapp.common.base.BaseFragment;
 import com.udacity.movieapp.common.helpers.Constants;
+import com.udacity.movieapp.common.helpers.MoviesDBController;
 import com.udacity.movieapp.common.helpers.Utilities;
 import com.udacity.movieapp.common.interfaces.MovieClickListener;
 import com.udacity.movieapp.common.interfaces.ToolbarChangeListener;
@@ -40,6 +41,7 @@ public class FragmentListingMovies extends BaseFragment implements ViewListingMo
     private GridLayoutManager mGridLayoutManager;
     private ArrayList<Movie> mListMovies;
     private AdapterMoviesListing mAdapterMoviesListing;
+    private MoviesDBController mDBController;
 
 
     @Override
@@ -47,6 +49,7 @@ public class FragmentListingMovies extends BaseFragment implements ViewListingMo
         super.onCreate(savedInstanceState);
         mContext = getActivity();
         mPresenterListingMovies = new PresenterListingMovies(mContext, this);
+        mDBController = new MoviesDBController(mContext);
         if (getArguments() != null)
             searchFilter = getArguments().getString(Constants.SEARCH_FILTER);
     }
@@ -70,7 +73,7 @@ public class FragmentListingMovies extends BaseFragment implements ViewListingMo
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (mToolbarChangeListener != null)
-            mToolbarChangeListener.changeToolbar(getString(R.string.app_name), false,true);
+            mToolbarChangeListener.changeToolbar(getString(R.string.app_name), false, true);
         if (savedInstanceState != null && savedInstanceState.containsKey(Constants.MOVIES_LIST)) {
             ArrayList<Movie> tempList = savedInstanceState.getParcelableArrayList(Constants.MOVIES_LIST);
             onMoviesListingSuccess(tempList);
@@ -124,6 +127,8 @@ public class FragmentListingMovies extends BaseFragment implements ViewListingMo
     }
 
     public void refresh(String mySearchFilter) {
+        if (Utilities.isTablet(mContext))
+            navigateToDetailsScreen(null);
         if (mPresenterListingMovies == null)
             mPresenterListingMovies = new PresenterListingMovies(mContext, this);
         searchFilter = mySearchFilter;
@@ -143,7 +148,8 @@ public class FragmentListingMovies extends BaseFragment implements ViewListingMo
 
     @Override
     public void navigateToDetailsScreen(Movie movie) {
-        getFragmentManager().beginTransaction().replace(R.id.containerMainListing,
+
+        getFragmentManager().beginTransaction().replace(Utilities.isTablet(mContext) ? R.id.containerMovieDetails : R.id.containerMainListing,
                 FragmentMovieDetails.newInstance(movie)).addToBackStack(Constants.FRAGMENT_MOVIE_DETAILS_TAG).commit();
     }
 
@@ -153,5 +159,15 @@ public class FragmentListingMovies extends BaseFragment implements ViewListingMo
         bundle.putString(Constants.SEARCH_FILTER, searchFilter);
         fragment.setArguments(bundle);
         return fragment;
+    }
+
+    public void loadFavorites() {
+        if (Utilities.isTablet(mContext))
+            navigateToDetailsScreen(null);
+        ArrayList<Movie> tempList = mDBController.getFavouriteMovies();
+        if (tempList != null && tempList.size() > 0)
+            onMoviesListingSuccess(tempList);
+        else
+            onMoviesListingFail(getString(R.string.no_favorite_movies));
     }
 }

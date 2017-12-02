@@ -12,4 +12,9 @@
         android:icon="@drawable/ic_top_rated"
         android:title=""
         app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/action_favorites"
+        android:icon="@drawable/ic_favorite"
+        android:title=""
+        app:showAsAction="ifRoom"/>
 </menu>

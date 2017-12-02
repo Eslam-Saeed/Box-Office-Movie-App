@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.udacity.movieapp.R;
+import com.udacity.movieapp.common.helpers.MoviesDBController;
 import com.udacity.movieapp.common.helpers.ServicesHelper;
 import com.udacity.movieapp.common.interfaces.MovieClickListener;
 import com.udacity.movieapp.common.models.Movie;
@@ -27,12 +28,14 @@ public class AdapterMoviesListing extends RecyclerView.Adapter<AdapterMoviesList
     private LayoutInflater mInflater;
     private ArrayList<Movie> listMyMovies;
     private MovieClickListener mMovieClickListener;
+    private MoviesDBController mDBController;
 
     AdapterMoviesListing(Context context, ArrayList<Movie> listMovies, MovieClickListener movieClickListener) {
         mContext = context;
         this.mInflater = LayoutInflater.from(mContext);
         this.listMyMovies = listMovies;
         this.mMovieClickListener = movieClickListener;
+        this.mDBController = new MoviesDBController(mContext);
     }
 
     @Override
@@ -53,6 +56,10 @@ public class AdapterMoviesListing extends RecyclerView.Adapter<AdapterMoviesList
                     mMovieClickListener.navigateToDetailsScreen(currentMovie);
                 }
             });
+            if (mDBController.isFavoriteMovie(currentMovie.getId()))
+                myViewHolder.imgFavorite.setVisibility(View.VISIBLE);
+            else
+                myViewHolder.imgFavorite.setVisibility(View.GONE);
         }
 
     }
@@ -63,12 +70,13 @@ public class AdapterMoviesListing extends RecyclerView.Adapter<AdapterMoviesList
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        private ImageView imgMoviePoster;
+        private ImageView imgMoviePoster, imgFavorite;
         private TextView txtMovieTitle;
 
         MyViewHolder(View itemView) {
             super(itemView);
             imgMoviePoster = itemView.findViewById(R.id.imgMoviePoster);
+            imgFavorite = itemView.findViewById(R.id.imgFavorite);
             txtMovieTitle = itemView.findViewById(R.id.txtMovieTitle);
         }
     }

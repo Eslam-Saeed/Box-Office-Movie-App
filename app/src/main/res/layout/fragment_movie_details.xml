@@ -2,10 +2,12 @@
 <android.support.v4.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@color/colorPrimaryLight"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryLight">
 
     <RelativeLayout
+        android:id="@+id/rlMovieDetails"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -14,41 +16,41 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorAccent"
+            android:elevation="@dimen/margin_vsmall"
             android:ellipsize="end"
             android:maxLines="1"
-            android:elevation="@dimen/margin_vsmall"
-            android:padding="@dimen/padding_xxlarge"
+            android:padding="@dimen/padding_xlarge"
             android:textColor="@color/white"
-            android:textSize="@dimen/font_xxxlarge"
+            android:textSize="@dimen/font_xxlarge"
             />
 
         <ImageView
             android:id="@+id/imgMovieDetail"
             android:layout_width="@dimen/img_detail_width"
             android:layout_height="@dimen/img_detail_height"
-            android:adjustViewBounds="true"
-            android:scaleType="fitXY"
             android:layout_below="@id/txtMovieTitle"
-            android:layout_margin="@dimen/padding_small"/>
+            android:layout_margin="@dimen/padding_small"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"/>
 
         <TextView
             android:id="@+id/txtYearRelease"
-            android:textColor="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/imgMovieDetail"
             android:layout_margin="@dimen/margin_vsmall"
             android:layout_toEndOf="@+id/imgMovieDetail"
+            android:textColor="@color/white"
             android:textSize="@dimen/font_xxlarge"/>
 
 
         <TextView
             android:id="@+id/txtMovieRate"
             android:layout_width="match_parent"
-            android:textColor="@color/white"
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/txtYearRelease"
             android:layout_below="@+id/txtYearRelease"
+            android:textColor="@color/white"
             android:textSize="@dimen/font_large"
             android:textStyle="bold"/>
 
@@ -69,11 +71,11 @@
         <TextView
             android:id="@+id/txtOverview"
             android:layout_width="match_parent"
-            android:textColor="@color/white"
             android:layout_height="wrap_content"
             android:layout_below="@+id/imgMovieDetail"
             android:padding="@dimen/padding_medium"
             android:textAlignment="viewStart"
+            android:textColor="@color/white"
             android:textSize="@dimen/font_medium"/>
 
         <View
@@ -83,6 +85,46 @@
             android:layout_below="@+id/txtOverview"
             android:layout_margin="@dimen/margin_small"
             android:background="@color/colorAccent"/>
+
+        <TextView
+            android:id="@+id/txtTrailers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/viewSeparator"
+            android:layout_margin="@dimen/margin_small"
+            android:text="@string/trailers"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/font_xxlarge"
+            android:textStyle="bold"
+            android:visibility="gone"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvTrailers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtTrailers"
+            android:paddingEnd="@dimen/margin_medium"
+            android:paddingStart="@dimen/margin_medium"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/txtReviews"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rvTrailers"
+            android:layout_margin="@dimen/margin_small"
+            android:text="@string/reviews"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/font_xxlarge"
+            android:textStyle="bold"
+            android:visibility="gone"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvReviews"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtReviews"
+            android:visibility="gone"/>
 
         <include
             android:id="@+id/progressBarMovieDetails"
