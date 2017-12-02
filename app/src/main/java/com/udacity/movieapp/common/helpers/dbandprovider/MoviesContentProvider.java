@@ -82,8 +82,6 @@ public class MoviesContentProvider extends ContentProvider {
         if (getContext() != null)
             getContext().getContentResolver().notifyChange(uri, null);
 
-        if (returnedUri != null)
-            Toast.makeText(getContext(), returnedUri.toString(), Toast.LENGTH_SHORT).show();
         return returnedUri;
     }
 
